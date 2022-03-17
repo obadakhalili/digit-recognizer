@@ -49,13 +49,12 @@ export default defineComponent({
             const snapshotBlob = await camera.value?.snapshot()
             const imageData = await createImageBitmap(snapshotBlob)
             const modelInput = tf.browser
-              .fromPixels(imageData)
+              .fromPixels(imageData, 1)
               .resizeNearestNeighbor([28, 28])
-              .mean(2)
               .reshape([1, 784])
               .div(tf.scalar(255))
             const modelOutput = model.predict(modelInput)
-            const recognition = modelOutput.argMax(1).dataSync()[0]
+            const [recognition] = await modelOutput.argMax(1).data()
 
             recognizedDigits.previous = recognizedDigits.current
             recognizedDigits.current = recognition
