@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "vite --host --port 8080",
     "dev:force": "yarn dev --force",
-    "format": "prettier --ignore-path .gitignore --write .",
+    "format": "prettier --ignore-path ../../../.gitignore --write .",
     "build": "vite build",
     "serve": "vite preview --host"
   },

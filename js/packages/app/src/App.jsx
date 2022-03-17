@@ -55,7 +55,7 @@ export default defineComponent({
               .reshape([1, 784])
               .div(tf.scalar(255))
             const modelOutput = model.predict(modelInput)
-            const recognition = modelOutput.argMax(1).dataSync()[0]
+            const [recognition] = await modelOutput.argMax(1).data()
 
             recognizedDigits.previous = recognizedDigits.current
             recognizedDigits.current = recognition

@@ -1,0 +1,13 @@
+{
+  "private": true,
+  "license": "MIT",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "format": "yarn run prettier --ignore-path ../.gitignore --write ."
+  },
+  "devDependencies": {
+    "prettier": "^2.3.1"
+  }
+}
