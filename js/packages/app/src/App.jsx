@@ -48,12 +48,15 @@ export default defineComponent({
           timerId = setInterval(async () => {
             const snapshotBlob = await camera.value?.snapshot()
             const imageData = await createImageBitmap(snapshotBlob)
-            const modelInput = tf.browser
-              .fromPixels(imageData, 1)
-              .resizeNearestNeighbor([28, 28])
-              .reshape([1, 784])
-              .div(tf.scalar(255))
-            const modelOutput = model.predict(modelInput)
+
+            const modelOutput = tf.tidy(() => {
+              const modelInput = tf.browser
+                .fromPixels(imageData, 1)
+                .resizeNearestNeighbor([28, 28])
+                .reshape([1, 784])
+                .div(tf.scalar(255))
+              return model.predict(modelInput)
+            })
             const [recognition] = await modelOutput.argMax(1).data()
 
             recognizedDigits.previous = recognizedDigits.current
